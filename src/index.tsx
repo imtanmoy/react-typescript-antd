@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Root from './components/Root';
+import { history, store } from './store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Root history={history} store={store} />
   </React.StrictMode>,
   document.getElementById('root')
 );
