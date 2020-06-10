@@ -1,7 +1,25 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosTransformer,
+} from 'axios';
+import _ from 'lodash';
+import CamelcaseKeys from 'camelcase-keys';
 import { AnonymousEndpoints, BASE_URL } from './config';
 
-const authInterceptor = async (request: AxiosRequestConfig) => {
+/* https://github.com/axios/axios/blob/master/test/typescript/axios.ts */
+
+const transformResponse: AxiosTransformer = (data: any): any => {
+  if (_.isObject(data)) {
+    return CamelcaseKeys(data, { deep: true });
+  }
+  return data;
+};
+
+const authInterceptor = async (
+  request: AxiosRequestConfig
+): Promise<AxiosRequestConfig> => {
   let isAnonymous: boolean = false;
   if (request.url != null) {
     isAnonymous = AnonymousEndpoints.includes(request.url);
@@ -19,13 +37,19 @@ const errorInterceptor = (axiosError: AxiosError) => {
   return Promise.reject(axiosError);
 };
 
-export const httpClient: AxiosInstance = axios.create({
+const axiosConfig: AxiosRequestConfig = {
   baseURL: BASE_URL,
   timeout: 2000, // 20s
   headers: {
     //ADD your customs headers here
   },
-});
+  transformResponse: [].concat(
+    // @ts-ignore
+    axios.defaults.transformResponse,
+    transformResponse
+  ),
+};
 
+export const httpClient: AxiosInstance = axios.create(axiosConfig);
 httpClient.interceptors.request.use(authInterceptor);
 httpClient.interceptors.response.use(res => res, errorInterceptor);
