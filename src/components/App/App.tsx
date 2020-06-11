@@ -13,7 +13,7 @@ export const App: React.FC<AppProps> = ({ history }) => {
   return (
     <Router history={history}>
       <Switch>
-        {routes.map(r => (
+        {routes.map((r) => (
           <Route
             key={r.path}
             path={r.path}

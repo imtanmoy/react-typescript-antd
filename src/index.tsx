@@ -4,10 +4,14 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Root from './components/Root';
 import { history, store } from './store';
+import GlobalStyle from './globalStyle';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Root history={history} store={store} />
+    <>
+      <GlobalStyle />
+      <Root history={history} store={store} />
+    </>
   </React.StrictMode>,
   document.getElementById('root')
 );
