@@ -1,12 +1,19 @@
 import React from 'react';
 import { Spin } from 'antd';
+import styled from 'styled-components';
+
+const Div = styled.div`
+  padding-top: 100px;
+  text-align: center;
+  min-height: 200px;
+`;
 
 const PageLoading: React.FC<{
   tip?: string;
 }> = ({ tip }) => (
-  <div style={{ paddingTop: 100, textAlign: 'center' }}>
+  <Div>
     <Spin size="large" tip={tip} />
-  </div>
+  </Div>
 );
 
 export default PageLoading;

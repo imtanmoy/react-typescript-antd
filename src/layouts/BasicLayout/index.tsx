@@ -4,6 +4,7 @@ import SideMenu from '../../components/SideMenu';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import WrapContent from '../WrapContent';
+import PageLoading from '../../components/PageLoading';
 
 const getPaddingLeft = (
   hasLeftPadding: boolean,
@@ -45,7 +46,7 @@ export default class BasicLayout extends React.Component<
   };
 
   render() {
-    const { children } = this.props;
+    const { children, loading = true } = this.props;
     const { collapsed, siderWidth, isHeaderFixed, isSiderFixed } = this.state;
     const genLayoutStyle: CSSProperties = {
       paddingLeft: getPaddingLeft(isSiderFixed, collapsed, siderWidth),
@@ -59,7 +60,7 @@ export default class BasicLayout extends React.Component<
             isFixed={isHeaderFixed}
             toggle={this.toggle}
           />
-          <WrapContent>{children}</WrapContent>
+          <WrapContent>{loading ? <PageLoading /> : children}</WrapContent>
           <Footer />
         </Layout>
       </Layout>
