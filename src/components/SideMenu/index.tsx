@@ -1,32 +1,34 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
+import classNames from 'classnames';
 import {
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
 
+import './index.css';
+
 const { Sider } = Layout;
 
 export interface SiderMenuProps {
   siderWidth?: number;
+  isFixed?: boolean;
   collapsed: boolean;
 }
 
 const SideMenu: React.FC<SiderMenuProps> = (props) => {
-  const { siderWidth = 256, collapsed } = props;
+  const { siderWidth = 256, collapsed, isFixed = true } = props;
+  const siderClassName = classNames('banik-sider-menu-sider', {
+    'fix-sider-bar': isFixed,
+  });
   return (
     <Sider
       trigger={null}
       collapsible
       collapsed={collapsed}
       width={siderWidth}
-      style={{
-        overflow: 'auto',
-        height: '100vh',
-        position: 'fixed',
-        left: 0,
-      }}
+      className={siderClassName}
     >
       <div className="logo" />
       <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>

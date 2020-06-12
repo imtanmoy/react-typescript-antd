@@ -7,12 +7,13 @@ import {
 import { Avatar, Menu, Spin, Dropdown } from 'antd';
 import { ClickParam } from 'antd/es/menu';
 import styled from 'styled-components';
+import classNames from 'classnames';
 
-const StyledSpan = styled.span`
+import './AvatarDropdown.css';
+
+const Span = styled.span`
   padding: 0px 10px;
 `;
-
-const overlayStyle = { paddingTop: '10px', paddingRight: '10px' };
 
 class AvatarDropdown extends React.Component {
   onMenuClick = (event: ClickParam) => {
@@ -38,23 +39,23 @@ class AvatarDropdown extends React.Component {
         </Menu.Item>
       </Menu>
     );
+
+    const className = classNames('banik-user-dropdown-overlay');
+
     return 'Tanmoy Banik' ? (
       <Dropdown
         overlay={menuHeaderDropdown}
         placement="bottomRight"
-        overlayStyle={overlayStyle}
+        overlayClassName={className}
       >
-        <StyledSpan>
-          <Avatar
-            // size="small"
-            style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
-          >
+        <Span>
+          <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
             U
           </Avatar>
-        </StyledSpan>
+        </Span>
       </Dropdown>
     ) : (
-      <StyledSpan>
+      <Span>
         <Spin
           size="small"
           style={{
@@ -62,7 +63,7 @@ class AvatarDropdown extends React.Component {
             marginRight: 8,
           }}
         />
-      </StyledSpan>
+      </Span>
     );
   }
 }

@@ -1,45 +1,62 @@
-import React, { Component } from 'react';
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import { Layout } from 'antd';
+import React, { Component, CSSProperties } from 'react';
+import classNames from 'classnames';
 import styled from 'styled-components';
-import HeaderRight from './HeaderRight';
+import { StyledHeader } from './style';
+import HeaderContent from './HeaderContent';
+import { isBrowser } from '../../utils/utils';
 
-const { Header: AntHeader } = Layout;
-
-const TriggerSpan = styled.span`
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
-
-  &:hover {
-    color: #1890ff;
-  }
-`;
-
-const StyledAntHeader = styled(AntHeader)`
-  background: #fff;
-  padding: 0;
-  display: flex;
-`;
+import './index.css';
 
 export interface HeaderProps {
   collapsed: boolean;
+  isFixed?: boolean;
   toggle: () => void;
 }
 
+const fixHeaderStyle: CSSProperties = {
+  width: 'calc(100% - 80px)',
+};
+
+const FixedHeaderEmptyDiv = styled.div`
+  height: 64px;
+`;
+
+const getFixStyleWidth = (collapsed: boolean) => {
+  return collapsed ? 80 : 256;
+};
+
 export default class Header extends Component<HeaderProps> {
+  triggerResizeEvent = () => {
+    if (isBrowser()) {
+      const event = document.createEvent('HTMLEvents');
+      event.initEvent('resize', true, false);
+      window.dispatchEvent(event);
+    }
+  };
+
+  toggle = () => {
+    this.props.toggle();
+    this.triggerResizeEvent();
+  };
+
   render(): React.ReactNode {
-    const { collapsed, toggle } = this.props;
+    const { collapsed, isFixed = true } = this.props;
+    fixHeaderStyle.width = `calc(100% - ${getFixStyleWidth(collapsed)}px)`;
+
+    const className = classNames({
+      'banik-fixed-header': isFixed,
+    });
+
     return (
-      <StyledAntHeader>
-        <TriggerSpan onClick={() => toggle()}>
-          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        </TriggerSpan>
-        <div style={{ flex: 1 }} />
-        <HeaderRight />
-      </StyledAntHeader>
+      <>
+        {isFixed && <FixedHeaderEmptyDiv />}
+        <StyledHeader
+          style={isFixed ? fixHeaderStyle : undefined}
+          className={className}
+        >
+          <HeaderContent collapsed={collapsed} toggle={this.toggle} />
+        </StyledHeader>
+      </>
     );
   }
 }

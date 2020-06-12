@@ -1,5 +1,4 @@
 export function debounce(func: Function, wait: number, immediate?: boolean) {
-  // immediate默认为false
   let timeout: number | null;
   let args: IArguments | null;
   let context: null;
@@ -47,3 +46,13 @@ export function debounce(func: Function, wait: number, immediate?: boolean) {
   };
   return debounceFunction;
 }
+
+const isNode =
+  typeof process !== 'undefined' &&
+  process.versions != null &&
+  process.versions.node != null;
+
+export const isBrowser = () =>
+  typeof window !== 'undefined' &&
+  typeof window.document !== 'undefined' &&
+  !isNode;

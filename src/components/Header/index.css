@@ -1,0 +1,8 @@
+.banik-fixed-header {
+  z-index: 9;
+  width: 100%;
+  transition: width 0.2s;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+}

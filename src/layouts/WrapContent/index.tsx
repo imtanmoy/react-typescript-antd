@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import { Layout } from 'antd';
 import ResizeObserver from 'rc-resize-observer';
+import styled from 'styled-components';
 import { debounce } from '../../utils/utils';
 
 const { Content } = Layout;
+
+const StyledContent = styled(Content)`
+  margin: 24px 16px;
+  padding: 24px;
+  background: #fff;
+  position: relative;
+  transition: width 0.2s;
+`;
 
 export interface WrapContentProps {
   contentHeight?: number | string;
@@ -22,11 +31,7 @@ class WrapContent extends Component<WrapContentProps> {
 
   render() {
     const { children } = this.props;
-    return (
-      <Content>
-        <div className="basicLayout-children-content-wrap">{children}</div>
-      </Content>
-    );
+    return <StyledContent>{children}</StyledContent>;
   }
 }
 
@@ -43,7 +48,6 @@ class ResizeObserverContent extends Component<
   };
 
   resize = debounce(({ height }: { height: number }) => {
-    console.log(height);
     const { contentHeight } = this.state;
     if (contentHeight !== height) {
       this.setState({
