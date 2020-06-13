@@ -84,6 +84,7 @@ export default class BasicLayout extends React.Component<
             collapsed={collapsed}
             isFixed={isHeaderFixed}
             toggle={this.toggle}
+            isMobile={isMobile}
           />
           <WrapContent>{loading ? <PageLoading /> : children}</WrapContent>
           <Footer />

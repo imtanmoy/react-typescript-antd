@@ -9,6 +9,7 @@ const { Header: AntHeader } = Layout;
 export interface HeaderProps {
   collapsed: boolean;
   isFixed: boolean;
+  isMobile: boolean;
   toggle: () => void;
 }
 
@@ -60,11 +61,7 @@ export default class Header extends Component<HeaderProps> {
       <>
         {isFixed && <FixedHeaderEmptyDiv />}
         <StyledHeader collapsed={collapsed} isFixed={isFixed}>
-          <HeaderContent
-            collapsed={collapsed}
-            isFixed={isFixed}
-            toggle={this.toggle}
-          />
+          <HeaderContent {...this.props} />
         </StyledHeader>
       </>
     );
