@@ -2,7 +2,6 @@ import React from 'react';
 import { ConnectedRouter as Router } from 'connected-react-router';
 import { Route, Switch } from 'react-router-dom';
 import { History } from 'history';
-import './App.css';
 import routes from '../../routes';
 
 interface AppProps {

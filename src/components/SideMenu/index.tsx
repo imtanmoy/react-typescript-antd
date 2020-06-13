@@ -1,6 +1,5 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
-import classNames from 'classnames';
 import {
   UserOutlined,
   VideoCameraOutlined,
@@ -8,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import styled from 'styled-components';
 
-import './index.css';
+const { Sider } = Layout;
 
 const LogoDiv = styled.div`
   position: relative;
@@ -41,11 +40,26 @@ const H1 = styled.h1`
   animation-duration: 0.3s;
 `;
 
-const { Sider } = Layout;
+const StyledSider = styled(Sider)<{ isFixed: boolean }>`
+  position: relative;
+  z-index: 10;
+  min-height: 100%;
+  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+
+  ${({ isFixed }) =>
+    isFixed &&
+    `position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow: auto;
+    box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+    `}
+`;
 
 export interface SiderMenuProps {
   siderWidth?: number;
-  isFixed?: boolean;
+  isFixed: boolean;
   collapsed: boolean;
   logo?: string;
   title?: string;
@@ -66,20 +80,17 @@ export const LogoAndTitleRender = (props: SiderMenuProps): React.ReactNode => {
 };
 
 const SideMenu: React.FC<SiderMenuProps> = (props) => {
-  const { siderWidth = 256, collapsed, isFixed = true } = props;
-  const siderClassName = classNames('banik-sider-menu-sider', {
-    'fix-sider-bar': isFixed,
-  });
+  const { siderWidth = 256, collapsed, isFixed } = props;
 
   const headerDom = LogoAndTitleRender(props);
 
   return (
-    <Sider
+    <StyledSider
       trigger={null}
       collapsible
       collapsed={collapsed}
       width={siderWidth}
-      className={siderClassName}
+      isFixed={isFixed}
     >
       {headerDom && (
         <LogoDiv
@@ -100,7 +111,7 @@ const SideMenu: React.FC<SiderMenuProps> = (props) => {
           nav 3
         </Menu.Item>
       </Menu>
-    </Sider>
+    </StyledSider>
   );
 };
 

@@ -1,29 +1,18 @@
-import React, { Component, CSSProperties } from 'react';
-import classNames from 'classnames';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { StyledHeader } from './style';
 import HeaderContent from './HeaderContent';
 import { isBrowser } from '../../utils/utils';
 
-import './index.css';
-
 export interface HeaderProps {
   collapsed: boolean;
-  isFixed?: boolean;
+  isFixed: boolean;
   toggle: () => void;
 }
-
-const fixHeaderStyle: CSSProperties = {
-  width: 'calc(100% - 80px)',
-};
 
 const FixedHeaderEmptyDiv = styled.div`
   height: 64px;
 `;
-
-const getFixStyleWidth = (collapsed: boolean) => {
-  return collapsed ? 80 : 256;
-};
 
 export default class Header extends Component<HeaderProps> {
   triggerResizeEvent = () => {
@@ -40,21 +29,17 @@ export default class Header extends Component<HeaderProps> {
   };
 
   render(): React.ReactNode {
-    const { collapsed, isFixed = true } = this.props;
-    fixHeaderStyle.width = `calc(100% - ${getFixStyleWidth(collapsed)}px)`;
-
-    const className = classNames({
-      'banik-fixed-header': isFixed,
-    });
+    const { collapsed, isFixed } = this.props;
 
     return (
       <>
         {isFixed && <FixedHeaderEmptyDiv />}
-        <StyledHeader
-          style={isFixed ? fixHeaderStyle : undefined}
-          className={className}
-        >
-          <HeaderContent collapsed={collapsed} toggle={this.toggle} />
+        <StyledHeader collapsed={collapsed} isFixed={isFixed}>
+          <HeaderContent
+            collapsed={collapsed}
+            isFixed={isFixed}
+            toggle={this.toggle}
+          />
         </StyledHeader>
       </>
     );

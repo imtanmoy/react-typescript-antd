@@ -1,23 +1,34 @@
 import React from 'react';
 import { Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import styled from 'styled-components';
 import AvatarDropdown from './AvatarDropdown';
 
 export interface HeaderRightProps {}
 
-const helpStyle = {
-  fontSize: '15px',
-  marginRight: '10px',
-};
+const Div = styled.div`
+  display: flex;
+  float: right;
+  height: 64px;
+  margin-left: auto;
+  overflow: hidden;
 
-const tooltipStyle = { padding: '0px 5px' };
+  > a,
+  > span {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+`;
 
 const HeaderRight: React.FC<HeaderRightProps> = (props) => {
   return (
-    <div>
-      <Tooltip title="Help" style={tooltipStyle}>
+    <Div>
+      <Tooltip title="Help">
         <a
-          style={helpStyle}
           target="_blank"
           href="https://tanmoybanik.com"
           rel="noopener noreferrer"
@@ -26,7 +37,7 @@ const HeaderRight: React.FC<HeaderRightProps> = (props) => {
         </a>
       </Tooltip>
       <AvatarDropdown />
-    </div>
+    </Div>
   );
 };
 export default HeaderRight;

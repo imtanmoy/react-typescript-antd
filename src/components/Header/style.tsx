@@ -15,9 +15,23 @@ export const TriggerSpan = styled.span`
   }
 `;
 
-export const StyledHeader = styled(Header)`
+export const StyledHeader = styled(Header)<{
+  collapsed?: boolean;
+  isFixed?: boolean;
+}>`
   background: #fff;
   padding: 0;
   display: flex;
   transition: width 0.2s;
+  ${({ collapsed, isFixed }) =>
+    isFixed &&
+    `
+    z-index: 9;
+    width: 100%;
+    transition: width 0.2s;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    width: calc(100% - ${collapsed ? '80px' : '256px'});
+  `}
 `;
