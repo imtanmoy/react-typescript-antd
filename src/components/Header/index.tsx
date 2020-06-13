@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Layout } from 'antd';
 import styled from 'styled-components';
-import { StyledHeader } from './style';
 import HeaderContent from './HeaderContent';
 import { isBrowser } from '../../utils/utils';
+
+const { Header: AntHeader } = Layout;
 
 export interface HeaderProps {
   collapsed: boolean;
@@ -12,6 +14,29 @@ export interface HeaderProps {
 
 const FixedHeaderEmptyDiv = styled.div`
   height: 64px;
+`;
+
+export const StyledHeader = styled(({ collapsed, isFixed, ...props }) => (
+  <AntHeader {...props} />
+))<{
+  collapsed: boolean;
+  isFixed: boolean;
+}>`
+  background: #fff;
+  padding: 0;
+  display: flex;
+  transition: width 0.2s;
+  ${({ collapsed, isFixed }) =>
+    isFixed &&
+    `
+    z-index: 9;
+    width: 100%;
+    transition: width 0.2s;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    width: calc(100% - ${collapsed ? '80px' : '256px'});
+  `}
 `;
 
 export default class Header extends Component<HeaderProps> {

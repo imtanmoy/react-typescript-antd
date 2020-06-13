@@ -10,7 +10,7 @@ import { SiderMenuProps } from './index';
 
 const { Sider } = Layout;
 
-const StyledSider = styled(Sider)<{ isFixed: boolean }>`
+const StyledSider = styled(({ isFixed, ...props }) => <Sider {...props} />)`
   position: relative;
   z-index: 10;
   min-height: 100%;
@@ -23,8 +23,7 @@ const StyledSider = styled(Sider)<{ isFixed: boolean }>`
     left: 0;
     height: 100%;
     overflow: auto;
-    box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
-    `}
+    box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);`}
 `;
 
 const LogoDiv = styled.div`
@@ -63,7 +62,6 @@ export const LogoAndTitleRender = (
   logo: string,
   title: string
 ): React.ReactNode => {
-  console.log(collapsed);
   const titleDom = <H1>{title}</H1>;
   return (
     <Anchor href="/">
@@ -87,14 +85,9 @@ const SiderMenu: React.FC<SiderMenuProps> = ({
     logo,
     title
   );
-  return (
-    <StyledSider
-      trigger={null}
-      collapsible
-      collapsed={isMobile ? false : collapsed}
-      width={siderWidth}
-      isFixed={isMobile ? false : isFixed}
-    >
+
+  const renderSiderContent = (
+    <>
       {headerDom && (
         <LogoDiv
           // onClick={onMenuHeaderClick}
@@ -114,6 +107,17 @@ const SiderMenu: React.FC<SiderMenuProps> = ({
           nav 3
         </Menu.Item>
       </Menu>
+    </>
+  );
+  return (
+    <StyledSider
+      trigger={null}
+      collapsible
+      collapsed={isMobile ? false : collapsed}
+      width={siderWidth}
+      isFixed={isMobile ? false : isFixed}
+    >
+      {renderSiderContent}
     </StyledSider>
   );
 };
