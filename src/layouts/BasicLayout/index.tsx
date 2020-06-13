@@ -1,5 +1,6 @@
 import React, { CSSProperties } from 'react';
 import { Layout } from 'antd';
+import { getScreenClassName } from 'use-media-antd-query';
 import SideMenu from '../../components/SideMenu';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -26,6 +27,7 @@ interface BasicLayoutStates {
   siderWidth: number;
   isSiderFixed: boolean;
   isHeaderFixed: boolean;
+  isMobile: boolean;
 }
 
 export default class BasicLayout extends React.Component<
@@ -37,7 +39,16 @@ export default class BasicLayout extends React.Component<
     isHeaderFixed: false,
     collapsed: false,
     siderWidth: 256,
+    isMobile: false,
   };
+
+  componentDidMount() {
+    const colSize = getScreenClassName();
+    const isMobile = colSize === 'sm' || colSize === 'xs';
+    this.setState({
+      isMobile,
+    });
+  }
 
   toggle = () => {
     this.setState({
@@ -47,13 +58,27 @@ export default class BasicLayout extends React.Component<
 
   render() {
     const { children, loading = false } = this.props;
-    const { collapsed, siderWidth, isHeaderFixed, isSiderFixed } = this.state;
+    const {
+      collapsed,
+      siderWidth,
+      isHeaderFixed,
+      isSiderFixed,
+      isMobile,
+    } = this.state;
+
     const genLayoutStyle: CSSProperties = {
       paddingLeft: getPaddingLeft(isSiderFixed, collapsed, siderWidth),
     };
+
     return (
       <Layout>
-        <SideMenu collapsed={collapsed} isFixed={isSiderFixed} />
+        <SideMenu
+          collapsed={collapsed}
+          isFixed={isSiderFixed}
+          isMobile={isMobile}
+          toggle={this.toggle}
+          siderWidth={siderWidth}
+        />
         <Layout style={genLayoutStyle}>
           <Header
             collapsed={collapsed}
