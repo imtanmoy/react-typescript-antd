@@ -14,6 +14,13 @@ const StyledContent = styled(Content)`
   transition: width 0.2s;
 `;
 
+const Div = styled.div`
+  width: 100%;
+  min-height: 100%;
+  transition: 0.3s;
+  margin: 0 auto;
+`;
+
 export interface WrapContentProps {
   contentHeight?: number | string;
 }
@@ -31,7 +38,11 @@ class WrapContent extends Component<WrapContentProps> {
 
   render() {
     const { children } = this.props;
-    return <StyledContent>{children}</StyledContent>;
+    return (
+      <StyledContent>
+        <Div>{children}</Div>
+      </StyledContent>
+    );
   }
 }
 

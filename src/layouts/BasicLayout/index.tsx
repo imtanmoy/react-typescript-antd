@@ -71,7 +71,12 @@ export default class BasicLayout extends React.Component<
     };
 
     return (
-      <Layout>
+      <Layout
+        style={{
+          minHeight: '100%',
+        }}
+        hasSider
+      >
         <SideMenu
           collapsed={collapsed}
           isFixed={isSiderFixed}
