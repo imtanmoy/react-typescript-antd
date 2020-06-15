@@ -52,8 +52,7 @@ const HeaderContent: React.FC<HeaderProps> = ({
 }) => {
   const logo =
     'https://gw.alipayobjects.com/zos/antfincdn/PmY%24TNNDBI/logo.svg';
-  const title = 'Tanmoy Banik';
-  const headerDom = LogoAndTitleRender(!collapsed, logo, title);
+  const headerDom = LogoAndTitleRender(!collapsed, logo);
   const logoDom = <Span key="logo">{headerDom}</Span>;
   return (
     <Div>

@@ -16,7 +16,7 @@ export const Home = () => {
               .fill(0)
               .map((item, index) => 0 + index)
               .map((i) => (
-                <h1>Data {i}</h1>
+                <h1 key={i}>Data {i}</h1>
               ))}
             <h1>Home Page</h1>
           </div>

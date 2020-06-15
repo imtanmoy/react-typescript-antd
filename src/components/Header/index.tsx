@@ -17,9 +17,9 @@ const FixedHeaderEmptyDiv = styled.div`
   height: 64px;
 `;
 
-export const StyledHeader = styled(({ collapsed, isFixed, ...props }) => (
-  <AntHeader {...props} />
-))<{
+export const StyledHeader = styled(
+  ({ collapsed, isFixed, isMobile, ...props }) => <AntHeader {...props} />
+)<{
   collapsed: boolean;
   isFixed: boolean;
 }>`
@@ -28,7 +28,7 @@ export const StyledHeader = styled(({ collapsed, isFixed, ...props }) => (
   padding: 0;
   display: flex;
   transition: width 0.2s;
-  ${({ collapsed, isFixed }) =>
+  ${({ isFixed }) =>
     isFixed &&
     `
     width: 100%;
@@ -36,8 +36,10 @@ export const StyledHeader = styled(({ collapsed, isFixed, ...props }) => (
     position: fixed;
     top: 0px;
     right: 0px;
-    width: calc(100% - ${collapsed ? '80px' : '256px'});
   `}
+
+  ${({ isMobile, collapsed }) =>
+    !isMobile && `width: calc(100% - ${collapsed ? '80px' : '256px'});`}
 `;
 
 export default class Header extends Component<HeaderProps> {
@@ -55,12 +57,16 @@ export default class Header extends Component<HeaderProps> {
   };
 
   render(): React.ReactNode {
-    const { collapsed, isFixed } = this.props;
+    const { collapsed, isFixed, isMobile } = this.props;
 
     return (
       <>
         {isFixed && <FixedHeaderEmptyDiv />}
-        <StyledHeader collapsed={collapsed} isFixed={isFixed}>
+        <StyledHeader
+          collapsed={collapsed}
+          isFixed={isFixed}
+          isMobile={isMobile}
+        >
           <HeaderContent {...this.props} />
         </StyledHeader>
       </>

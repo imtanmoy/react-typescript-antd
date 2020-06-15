@@ -59,13 +59,13 @@ const H1 = styled.h1`
 
 export const LogoAndTitleRender = (
   collapsed: boolean,
-  logo: string,
-  title: string
+  logo?: string,
+  title?: string
 ): React.ReactNode => {
-  const titleDom = <H1>{title}</H1>;
+  const titleDom = title ? <H1>{title}</H1> : null;
   return (
     <Anchor href="/">
-      <Img src={logo} alt="logo" />
+      {logo ? <Img src={logo} alt="logo" /> : null}
       {collapsed ? null : titleDom}
     </Anchor>
   );
