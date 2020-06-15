@@ -35,8 +35,8 @@ export default class BasicLayout extends React.Component<
   BasicLayoutStates
 > {
   state = {
-    isSiderFixed: false,
-    isHeaderFixed: false,
+    isSiderFixed: true,
+    isHeaderFixed: true,
     collapsed: false,
     siderWidth: 256,
     isMobile: false,
@@ -68,6 +68,7 @@ export default class BasicLayout extends React.Component<
 
     const genLayoutStyle: CSSProperties = {
       paddingLeft: getPaddingLeft(isSiderFixed, collapsed, siderWidth),
+      transition: isSiderFixed ? 'all 0.2s' : undefined,
     };
 
     return (

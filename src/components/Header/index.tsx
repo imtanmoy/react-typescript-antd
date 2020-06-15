@@ -23,6 +23,7 @@ export const StyledHeader = styled(({ collapsed, isFixed, ...props }) => (
   collapsed: boolean;
   isFixed: boolean;
 }>`
+  z-index: 9;
   background: #fff;
   padding: 0;
   display: flex;
@@ -30,7 +31,6 @@ export const StyledHeader = styled(({ collapsed, isFixed, ...props }) => (
   ${({ collapsed, isFixed }) =>
     isFixed &&
     `
-    z-index: 9;
     width: 100%;
     transition: width 0.2s;
     position: fixed;

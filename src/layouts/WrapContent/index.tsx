@@ -7,17 +7,15 @@ import { debounce } from '../../utils/utils';
 const { Content } = Layout;
 
 const StyledContent = styled(Content)`
-  margin: 24px 16px;
-  padding: 24px;
-  background: #fff;
   position: relative;
-  transition: width 0.2s;
+  margin: 24px;
+  transition: all 0.2s;
 `;
 
 const Div = styled.div`
   width: 100%;
   min-height: 100%;
-  transition: 0.3s;
+  transition: all 0.2s;
   margin: 0 auto;
 `;
 
